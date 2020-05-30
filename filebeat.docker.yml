@@ -1,0 +1,7 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /tmp/host-logs/kube-apiserver-audit.log 
+output.elasticsearch:
+  hosts: 'elasticsearch:9200'

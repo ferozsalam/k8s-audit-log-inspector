@@ -1,0 +1,5 @@
+--audit-log-maxbackup=3
+--audit-log-maxsize=1024
+--audit-log-maxage=30
+--audit-policy-file=/var/snap/microk8s/current/args/kube-api-audit-policy
+--audit-log-path=/var/log/kube-apiserver-audit.log
