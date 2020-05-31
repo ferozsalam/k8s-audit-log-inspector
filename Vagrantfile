@@ -13,6 +13,17 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "./audit-config",
                               destination: "/home/vagrant/audit-config"
 
+  config.vm.provision "file", source: "./kibana-saved-objects/index-patterns.ndjson",
+                              destination: "/home/vagrant/index-patterns.ndjson"
+
+  config.vm.provision "file", source: "./kibana-saved-objects/visualizations.ndjson",
+                              destination: "/home/vagrant/visualizations.ndjson"
+
+
+  config.vm.provision "file", source: "./kibana-saved-objects/dashboards.ndjson",
+                              destination: "/home/vagrant/dashboards.ndjson"
+
+
   # Install microk8s and configures audit logging
   config.vm.provision :shell, inline: "snap install microk8s --classic && \
                                        cat audit-config >> /var/snap/microk8s/current/args/kube-apiserver"
@@ -45,6 +56,9 @@ Vagrant.configure("2") do |config|
                                  -p 5601:5601 \
                                  --network audit"
 
+
+
+
     d.run "docker.elastic.co/beats/filebeat:7.7.0",
                 args: "--name=filebeat \
                        --network audit \
@@ -55,5 +69,11 @@ Vagrant.configure("2") do |config|
 
   # Open a port to Kibana on the host machine
   config.vm.network "forwarded_port", guest: 5601, host: 5601
+
+  #Loads saved objects to Kibana
+  config.vm.provision "shell", inline: "curl --silent -X POST 'localhost:5601/api/saved_objects/_import' -H 'kbn-xsrf: true' --form file=@/home/vagrant/index-patterns.ndjson"
+  config.vm.provision "shell", inline: "curl --silent -X POST 'localhost:5601/api/saved_objects/_import' -H 'kbn-xsrf: true' --form file=@/home/vagrant/visualizations.ndjson"
+  config.vm.provision "shell", inline: "curl --silent -X POST 'localhost:5601/api/saved_objects/_import' -H 'kbn-xsrf: true' --form file=@/home/vagrant/dashboards.ndjson"
+
 
 end
