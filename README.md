@@ -1,4 +1,4 @@
-# k8s-audit-log-inspector
+# :detective: k8s-audit-log-inspector
 
 Want to study how k8s audit logs work? This repo provides a Vagrant box configuration that:
 
