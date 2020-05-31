@@ -57,14 +57,11 @@ Vagrant.configure("2") do |config|
                                  --network audit"
 
 
-
-
-    d.run "docker.elastic.co/beats/filebeat:7.7.0",
+    d.run "docker.elastic.co/beats/filebeat:7.7.0 -e -strict.perms=false",
                 args: "--name=filebeat \
                        --network audit \
                        --volume='/home/vagrant/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml' \
-                       --volume='/var/log:/tmp/host-logs/' \
-                       -e -strict.perms=false"
+                       --volume='/var/log:/tmp/host-logs/'"
   end
 
   # Open a port to Kibana on the host machine
