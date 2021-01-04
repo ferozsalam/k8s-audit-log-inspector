@@ -23,9 +23,13 @@ Once the build is finished, it might still take several minutes for Elasticsearc
 and Kibana to set themselves up; I recommend waiting at least five minutes before
 navigating to `localhost:5601` on the host machine.
 
-Once the box is running, you can access the box via `vagrant ssh` to make any
-changes you want, but PRs are welcome for any fundamental issues with the default
-configuration. The build has been tested on Ubuntu 18.04.
+Once the box is running, you can access the box via `vagrant ssh` to run operations
+on the microk8s cluster. You will need to `sudo -i` to do so first (no password required)
+as the default `vagrant` user currently isn't in the correct groups. Once you are root,
+use `microk8s.kubectl` in order to run commands as usual, for example, `microk8s.kubectl get po`.
+
+PRs are welcome for any fundamental issues with the default configuration. The build
+has been tested on Ubuntu 18.04.
 
 Ideally we would be able to use something like [kind][1], but it does not currently support
 audit logging, so we use the Vagrant approach instead.
