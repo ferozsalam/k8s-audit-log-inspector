@@ -1,0 +1,8 @@
+# This audit policy will capture all requests
+# to the fullest extend it's permitted
+
+apiVersion: audit.k8s.io/v1beta1
+kind: Policy
+rules:
+  # Default level for all other requests.
+  - level: RequestResponse
