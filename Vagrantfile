@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
 
   # Load the audit policy into the VM, restart microk8s to pick up changes
   # TODO: Use a synced folder (?)
-  config.vm.provision "file", source: "./kube-api-audit-policy",
+  config.vm.provision "file", source: "kube-api-audit-policies/kube-api-audit-policy-gke",
                               destination: "/tmp/kube-api-audit-policy"
   config.vm.provision "shell", inline: "mv /tmp/kube-api-audit-policy /var/snap/microk8s/current/args/"
   config.vm.provision "shell", inline: "systemctl restart snap.microk8s.daemon-apiserver.service"
